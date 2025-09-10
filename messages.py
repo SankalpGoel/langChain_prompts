@@ -5,9 +5,20 @@ from dotenv import load_dotenv
 load_dotenv()
 
 llm = HuggingFaceEndpoint(
-    repo_id = "moonshotai/Kimi-K2-Instruct-0905",   
+    repo_id = "mistralai/Mistral-7B-Instruct-v0.2",   
     task = "text-generation"
 )   
 
 model = ChatHuggingFace(llm=llm)
+
+messages = [
+    SystemMessage(content="You are a helpful assistant."),
+    HumanMessage(content="Tell me about langChain."),
+]
+
+result = model.invoke(messages)
+
+messages.append(AIMessage(content=result.content))
+
+print(messages)
 
